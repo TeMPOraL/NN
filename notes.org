@@ -1,4 +1,79 @@
 #+title: NN Bus - notatki
+#+startup: hidestars
 
 * /b/
+** Dane wejściowe
+   - czas (00:00 - 23:59)
+   - dzień tygodnia (0-6)
+   - lokacja (???)
+   - wybór użytkownika (do tego trenujemy)
 
+
+** Idea algorytmu
+
+   Patrzymy na wybór użytkownika. Jeśli użytkownik na to już patrzył,
+   to trenujemy sieć na podanym wejściu. Jeśli nie patrzył, to
+   dodajemy wybór do zbioru sprawdzanych i dopinamy neuron do
+   sieci :). Jeśli użytkownik kliknie na rekomendacji, że mu się nie
+   podoba w ogóle, to karamy jakoś ten neuron i/lub usuwamy go z
+   sieci, a wybór ze zbioru oglądanych.
+
+** Uwagi implementacyjne
+
+*** GUI
+    Oparłbym o HTML/CSS/JS.
+
+*** NN
+    Cokolwiek, ze zembeddowanym serwerkiem HTTP przyjmującym i
+    odpowiadającym na zapytania. Frontend obsłuży to AJAXem / jQuery.
+
+** Struktura projektu
+*** GUI
+**** Część "normalna"
+     Pozwala wybrać rozkład, który chcemy zobaczyć. Wyświetla
+     predykcje i pozwala z nich skorzystać lub ocenić je negatywnie.
+
+**** Część developerska
+     Pozwala zmienić stan środowiska, tj. aktualną datę, czas i
+     lokalizację. Pozwala oglądać stan klasyfikatora.
+
+     Oglądanie klasyfikatora:
+     - ask/n odpalone na całym przedziale czasowym do wygenerowania 'timetables'.
+     - (złamie barierę abstrakcji) stan wewnętrzny sieci
+
+*** Baza danych z rozkładami, przystankami, itp.
+    Bądź zescrappowane dane z MPK.
+
+*** Klasyfikator
+    Na wejściu dane. Na wyjściu predykcja. Może być w czymkolwiek
+    (nawet jako osobny program). API w sekcji [[API klasyfikatora]].
+
+
+** API klasyfikatora 
+   Będzie można podstawić cokolwiek, nie tylko sieć neuronową.
+
+*** learn(input, expected)
+    Po wykonaniu tego spodziewamy się:
+    - ask(input) -> expected
+    - ask(input, N >= 1) -> [_, expected | _]
+
+*** unlearn(input, invalid-result)
+    Po wykonaniu spodziewamy się, że ask(input) raczej nie zwróci nam
+    już invalid-result.
+
+*** forget(input, invalid-result)
+    Po wykonaniu spodziewamy się, że klasyfikator zachowuje się, jakby
+    nigdy wcześniej nie spotkał invalid-result.
+
+*** ask(input) -> output
+    Służy do pobierania wyników z klasyfikatora BEZ zmiany jego stanu.
+
+*** ask(input, N) -> [output] //0..N outputs.
+    Jak w przypadku ask/1, ale zwraca do N pasujących wyników, a nie
+    tylko 1.
+
+
+
+
+
+                                                                     
