@@ -9,6 +9,11 @@
    - wybór użytkownika (do tego trenujemy)
 
 
+** Rozkład jazdy
+   Atomowym elementem będzie trójka (linia, przystanek, kierunek),
+   zwana dalej Rozkładem.
+
+
 ** Idea algorytmu
 
    Patrzymy na wybór użytkownika. Jeśli użytkownik na to już patrzył,
@@ -61,7 +66,7 @@
     Po wykonaniu spodziewamy się, że ask(input) raczej nie zwróci nam
     już invalid-result.
 
-*** forget(input, invalid-result)
+*** forget(+input+, invalid-result)
     Po wykonaniu spodziewamy się, że klasyfikator zachowuje się, jakby
     nigdy wcześniej nie spotkał invalid-result.
 
