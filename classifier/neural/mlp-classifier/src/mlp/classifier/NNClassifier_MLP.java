@@ -40,8 +40,11 @@ public class NNClassifier_MLP implements Classifier {
 
     @Override
     public void learn(double[] inputs, int output) {
+        System.out.println("PRE-TRAIN");
         requestsSoFar.add(new Request(inputs, output));
+        System.out.println("REQ");
         retrain();
+        System.out.println("POST-TRAIN");
     }
 
     @Override
@@ -110,23 +113,14 @@ public class NNClassifier_MLP implements Classifier {
             }
         }
         
-        System.out.println("POST-DEC");
-        
         SortHelper[] helper = new SortHelper[results.length];
         for(int i = 0 ; i < results.length ; ++i) {
             helper[i] = new SortHelper(results[i], i);
         }
-        
-        System.out.println("PRE-SORT");
 
         Arrays.sort(helper, new SortHelperComparator());
         
-        System.out.println("POST-SORT");
-        
         int[] retVal = {helper[0].idx, helper[1].idx, helper[2].idx};
-        
-        System.out.println("END");
-        
         return retVal;
     }
     

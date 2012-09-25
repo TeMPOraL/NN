@@ -38,24 +38,6 @@ public class MlpClassifier {
         server.start();
         System.out.println("Server is listening on port 8080" );
         
-        double[] inputs = {0.0f, 0.0f, 1.0f, 0.0f};
-        double[] inputs2 = {10.0f, 2.0f, 1.0f, 0.0f};
-        double[] inputs3 = {10.0f, 4.0f, 1.0f, 0.0f};
-        double[] inputs4 = {15.0f, 0.0f, 1.0f, 0.0f};
-        double[] inputs5 = {40.0f, 0.0f, 1.0f, 0.0f};
-        
-        classifier.learn(inputs, 1);
-        classifier.learn(inputs2, 2);
-        //classifier.learn(inputs3, 3);
-        //classifier.learn(inputs4, 4);
-        classifier.learn(inputs5, 5);
-
-        System.out.println("" + classifier.ask(inputs) + print_array(classifier.debugAskForAll(inputs)));
-        System.out.println("" + classifier.ask(inputs2) + print_array(classifier.debugAskForAll(inputs2)));
-        System.out.println("" + classifier.ask(inputs3) + print_array(classifier.debugAskForAll(inputs3)));
-        System.out.println("" + classifier.ask(inputs4) + print_array(classifier.debugAskForAll(inputs4)));
-        System.out.println("" + classifier.ask(inputs5) + print_array(classifier.debugAskForAll(inputs5)));
-                                        
     }
     
     static String print_array(double[] arr) {
@@ -104,15 +86,12 @@ class GetTimetablesRequestHandler extends ClassifierRequestHandler {
                 Double.parseDouble((String)params.get("locY"))
             };
             
-            System.out.println("aaaa");
-            
             int[] output = MlpClassifier.classifier.askForMultiple(input);
-            System.out.println("bbbb");
+
             out.write(("([").getBytes());
-            System.out.println("cccc");
+
             for(int numOut : output) {
                 out.write(("" + numOut + ",").getBytes());
-                System.out.println(numOut);
             }
             out.write(("]);").getBytes());
                     
@@ -139,7 +118,19 @@ class RememberTimetableRequestHandler extends ClassifierRequestHandler {
     @Override
     public void execute(OutputStream out, Map<String, Object> params) {
         try {
-            out.write("RememberTimetableRequest\n".getBytes());
+            out.write(((String)params.get("callback")).getBytes());
+            
+            double[] input = {
+                Double.parseDouble((String)params.get("time")),
+                Double.parseDouble((String)params.get("day")),
+                Double.parseDouble((String)params.get("locX")),
+                Double.parseDouble((String)params.get("locY"))
+            };
+            
+            int output = Integer.parseInt((String)params.get("timetable"));
+            
+            MlpClassifier.classifier.learn(input, output);
+            
         } catch (IOException ex) {
             Logger.getLogger(ClassifierRequestHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

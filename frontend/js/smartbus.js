@@ -73,9 +73,9 @@ function displayRecommendations(data) {
 
 function notifyTimetableSelected(timetableId) {
     var data = grabInputData();
-    console.debug("loading TBL: " + timetableId);
-    console.debug(data);
-    //TODO Do AJAX call here.
+    var requestUrl = urlLearn + '?day=' + data[0] + '&time=' + data[1] + '&locX=' + data[2] + '&locY=' + data[3] + '&timetable=' + timetableId + '&callback=?';
+    $.getJSON(requestUrl, function(data) {  });
+
 }
 
 function grabInputData() {
