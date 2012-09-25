@@ -1,1 +1,14 @@
 #+title: SmartBus
+
+Using AI tricks to make an intelligent bus schedule site that learns
+what buses you want to see and automatically shows you the most
+suitable ones. Inspired by Bret Victor's "Magic Ink" [fn:1]
+
+NOTE this project is currently used to pass neural network class at my
+university, so that's why 1) it uses neural networks, and 2) looks
+like crap.
+
+* Footnotes
+
+[fn:1] http://worrydream.com/MagicInk/
+
