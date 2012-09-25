@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class MlpClassifier {
     
-    static Classifier classifier = new NNClassifier_MLP();
+    public static Classifier classifier = new NNClassifier_MLP();
 
     /**
      * @param args the command line arguments
@@ -76,18 +76,14 @@ abstract class ClassifierRequestHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange he) throws IOException {
         Headers responseHeaders = he.getResponseHeaders();
-        responseHeaders.set("Content-Type", "application/json");
+        responseHeaders.set("Content-Type", "text/javascript");
         he.sendResponseHeaders(200, 0);
         
         OutputStream responseBody = he.getResponseBody();
         
         Map<String, Object> params = (Map<String, Object>) he.getAttribute("parameters");
-
-       for(Map.Entry<String, Object> param : params.entrySet()) {
-            responseBody.write( ("" + param.getKey() + ": " + (String)param.getValue() + "\n").getBytes());
-        }
        
-       this.execute(responseBody, params);
+        this.execute(responseBody, params);
        
         responseBody.close();
         
@@ -99,7 +95,18 @@ class GetTimetablesRequestHandler extends ClassifierRequestHandler {
     @Override
     public void execute(OutputStream out, Map<String, Object> params) {
         try {
-            out.write("GetTimetablesRequest\n".getBytes());
+            out.write(((String)params.get("callback")).getBytes());
+            
+            double[] input = {
+                Double.parseDouble((String)params.get("time")),
+                Double.parseDouble((String)params.get("day")),
+                Double.parseDouble((String)params.get("locX")),
+                Double.parseDouble((String)params.get("locY"))
+            };
+            
+            int output = MlpClassifier.classifier.ask(input);
+            out.write(("([" + output + "]);").getBytes());
+                    
         } catch (IOException ex) {
             Logger.getLogger(ClassifierRequestHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

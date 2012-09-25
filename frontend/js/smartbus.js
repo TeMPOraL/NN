@@ -55,16 +55,18 @@ function getRecommendations() {
     console.debug("get recommendations");
     console.debug(data);
     
-    var requestUrl = urlAsk + '?day=' + data[0] + '&time=' + data[1] + '&locX=' + data[2] + '&locY=' + data[3];
+    var requestUrl = urlAsk + '?day=' + data[0] + '&time=' + data[1] + '&locX=' + data[2] + '&locY=' + data[3]+'&callback=?';
     console.debug(requestUrl);
 
-    $.ajax({
-        url : requestUrl,
-        dataType : "jsonp",
-        success : function(data) {
-            console.debug(data);
-        }
-        });
+    $("#recommendations").html("loading...");
+    $.getJSON(requestUrl, function(data) { displayRecommendations(data); });
+}
+
+function displayRecommendations(data) {
+    $("#recommendations").html("<ul></ul>");
+    $.each(data, function(i, v) {
+        $("#recommendations ul").append("<li><a href='#' onclick='loadTimetable(" + v + "); return false;'>" + timetables[v].fullName + "</a></li>");
+    });
 }
 
 function notifyTimetableSelected(timetableId) {
