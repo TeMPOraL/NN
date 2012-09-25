@@ -4,6 +4,8 @@
  */
 package mlp.classifier;
 
+import java.lang.reflect.Array;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import org.neuroph.core.learning.SupervisedTrainingElement;
@@ -75,8 +77,39 @@ public class NNClassifier_MLP implements Classifier {
 
     @Override
     public int[] askForMultiple(double[] inputs) {
-        //TODO
+        
+        nnet.setInput(inputs);
+        nnet.calculate();
+        double[] results = nnet.getOutput();
+        
+        class SortHelper {
+            double val;
+            int idx;
+            SortHelper(double val, int idx) {
+                this.val = val;
+                this.idx = idx;
+            }
+        };
+        
+        class SortHelperComparator implements Comparator<SortHelper> {
+
+            @Override
+            public int compare(SortHelper o1, SortHelper o2) {
+                if(o1.val > o2.val) { 
+                    return -1;
+                }
+                else if(o1.val < o2.val) {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+        
+        //FIXME FIXME FIXME
+
         return null;
+        
+        
     }
     
     @Override
