@@ -1,8 +1,14 @@
+var server="http://localhost:8080/";
+
+var urlAsk = server + "getTimetables";
+var urlLearn = server + "rememberTimetable";
+
+
+
 function timetable(fullName, URL) {
     this.fullName = fullName;
     this.URL = URL;
 }
-
 
 var timetables = [new timetable("4 (Urzędnicza -> Wzgórza Krzesławickie)", "http://rozklady.mpk.krakow.pl/aktualne/0004/0004t039.htm"),
                   new timetable("4 (AWF -> Bronowice Małe)", "http://rozklady.mpk.krakow.pl/aktualne/0004/0004t014.htm"),
@@ -35,7 +41,7 @@ function drawListOfTimetables() {
 }
 
 function loadTimetable(timetableId) {
-    //TODO learn NN
+    notifyTimetableSelected(timetableId);
     displayTimetable(timetables[timetableId]);
 }
 
@@ -44,21 +50,42 @@ function setDefaultInputValues() {
 }
 
 function getRecommendations() {
+    var data = grabInputData();
 
+    console.debug("get recommendations");
+    console.debug(data);
+    
+    var requestUrl = urlAsk + '?day=' + data[0] + '&time=' + data[1] + '&locX=' + data[2] + '&locY=' + data[3];
+    console.debug(requestUrl);
+
+    $.ajax({
+        url : requestUrl,
+        dataType : "jsonp",
+        success : function(data) {
+            console.debug(data);
+        }
+        });
 }
 
 function notifyTimetableSelected(timetableId) {
+    var data = grabInputData();
+    console.debug("loading TBL: " + timetableId);
+    console.debug(data);
+    //TODO Do AJAX call here.
+}
+
+function grabInputData() {
     var time = jQuery("#ctl-time").val().split(':').join('.');
     var day = jQuery("#ctl-day-of-the-week").val();
     var loc = jQuery("#ctl-location").val();
     var locX = locations[loc][0];
     var locY = locations[loc][1];
 
-    console.log([day, time, locX, locY, timetableId]);
+    return [day, time, locX, locY];
 }
 
 function bindHandlers() {
-
+    $("select,input").change(function() { getRecommendations(); });
 }
 
 jQuery(document).ready(function() {

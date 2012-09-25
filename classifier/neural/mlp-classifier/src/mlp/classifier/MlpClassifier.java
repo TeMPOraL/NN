@@ -76,7 +76,7 @@ abstract class ClassifierRequestHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange he) throws IOException {
         Headers responseHeaders = he.getResponseHeaders();
-        responseHeaders.set("Content-Type", "text/plain");
+        responseHeaders.set("Content-Type", "application/json");
         he.sendResponseHeaders(200, 0);
         
         OutputStream responseBody = he.getResponseBody();
