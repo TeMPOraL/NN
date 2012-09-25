@@ -10,14 +10,14 @@ package mlp.classifier;
  */
 public interface Classifier {
     
-    abstract public void learn();
+    abstract public void learn(double[] inputs, int output);
     
-    abstract public void unlearn();
+    abstract public void unlearn(double[] inputs, int output);
     
-    abstract public void forget();
+    abstract public void forget(int output);
     
-    abstract public void ask();
+    abstract public int ask(double[] inputs);
     
-    abstract public void askForMultiple();
+    abstract public int[] askForMultiple(double[] inputs);
     
 }

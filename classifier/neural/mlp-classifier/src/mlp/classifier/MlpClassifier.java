@@ -21,6 +21,8 @@ import java.util.logging.Logger;
  * @author TeMPOraL
  */
 public class MlpClassifier {
+    
+    static Classifier classifier = new NNClassifier_MLP();
 
     /**
      * @param args the command line arguments
@@ -35,6 +37,9 @@ public class MlpClassifier {
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
         System.out.println("Server is listening on port 8080" );
+        
+        double[] inputs = {0.0f, 0.0f, 1.0f, 0.0f};
+        System.out.println(classifier.ask(inputs));
     }
 }
 
