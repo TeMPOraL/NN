@@ -36,7 +36,22 @@ function loadTimetable(timetableId) {
     displayTimetable(timetables[timetableId]);
 }
 
+function setDefaultInputValues() {
+    jQuery("#ctl-time").val("16:00");
+}
+
+function getRecommendations() {
+
+}
+
+function bindHandlers() {
+
+}
+
 jQuery(document).ready(function() {
+    setDefaultInputValues();
+    bindHandlers();
     drawListOfTimetables();
+    getRecommendations();
     //init by guessing a timetable
 });

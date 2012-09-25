@@ -13,9 +13,32 @@
     <h1>SmartBus</h1>
 
     <div id="spatiotemporal-controls">
+      <select id="ctl-location">
+        <option value="home">Dom</option>
+        <option value="work">Praca</option>
+        <option value="gf">Dziewczyna</option>
+        <option value="center">Centrum miasta</option>
+      </select>
+
+      <select id="ctl-day-of-the-week">
+        <option value="0">Niedziela</option>
+        <option value="1">Poniedziałek</option>
+        <option value="2">Wtorek</option>
+        <option value="3">Środa</option>
+        <option value="4">Czwartek</option>
+        <option value="5">Piątek</option>
+        <option value="6">Sobota</option>
+      </select>
+
+      <input id="ctl-time" type="text"></input>
+    </div>
+
+    <div id="recommendations">
+      <h2>Rekomendacje</h2>
     </div>
 
     <div id="links-to-available-timetables">
+      <h2>Dostępne rozkłady</h2>
     </div>
 
     <iframe id="mpk-timetable" />
