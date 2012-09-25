@@ -20,4 +20,6 @@ public interface Classifier {
     
     abstract public int[] askForMultiple(double[] inputs);
     
+    abstract public double[] debugAskForAll(double[] inputs);
+    
 }

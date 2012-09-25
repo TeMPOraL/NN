@@ -39,7 +39,33 @@ public class MlpClassifier {
         System.out.println("Server is listening on port 8080" );
         
         double[] inputs = {0.0f, 0.0f, 1.0f, 0.0f};
-        System.out.println(classifier.ask(inputs));
+        double[] inputs2 = {10.0f, 2.0f, 1.0f, 0.0f};
+        double[] inputs3 = {10.0f, 4.0f, 1.0f, 0.0f};
+        double[] inputs4 = {15.0f, 0.0f, 1.0f, 0.0f};
+        double[] inputs5 = {40.0f, 0.0f, 1.0f, 0.0f};
+        
+        classifier.learn(inputs, 1);
+        classifier.learn(inputs2, 2);
+        //classifier.learn(inputs3, 3);
+        //classifier.learn(inputs4, 4);
+        classifier.learn(inputs5, 5);
+
+        System.out.println("" + classifier.ask(inputs) + print_array(classifier.debugAskForAll(inputs)));
+        System.out.println("" + classifier.ask(inputs2) + print_array(classifier.debugAskForAll(inputs2)));
+        System.out.println("" + classifier.ask(inputs3) + print_array(classifier.debugAskForAll(inputs3)));
+        System.out.println("" + classifier.ask(inputs4) + print_array(classifier.debugAskForAll(inputs4)));
+        System.out.println("" + classifier.ask(inputs5) + print_array(classifier.debugAskForAll(inputs5)));
+                                        
+    }
+    
+    static String print_array(double[] arr) {
+        String ret = "[ ";
+        
+        for(double el : arr) {
+            ret += el + " ";
+        }
+        
+        return ret + "]";
     }
 }
 

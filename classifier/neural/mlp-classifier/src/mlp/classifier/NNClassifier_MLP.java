@@ -79,6 +79,13 @@ public class NNClassifier_MLP implements Classifier {
         return null;
     }
     
+    @Override
+    public double[] debugAskForAll(double[] inputs) {
+        nnet.setInput(inputs);
+        nnet.calculate();
+        return nnet.getOutput();
+    }
+    
     private void retrain() {
         rebuildTrainingSet();
         nnet = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, INPUTS,HIDDEN,OUTPUTS);
@@ -105,7 +112,7 @@ public class NNClassifier_MLP implements Classifier {
         retArray[output] = 1.0f;
         return retArray;
     }
-    
+
     class Request {
         double[] inputs;
         int output;
