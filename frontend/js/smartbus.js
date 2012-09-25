@@ -65,7 +65,9 @@ function getRecommendations() {
 function displayRecommendations(data) {
     $("#recommendations").html("<ul></ul>");
     $.each(data, function(i, v) {
-        $("#recommendations ul").append("<li><a href='#' onclick='loadTimetable(" + v + "); return false;'>" + timetables[v].fullName + "</a></li>");
+        if(v < timetables.length) {
+            $("#recommendations ul").append("<li><a href='#' onclick='loadTimetable(" + v + "); return false;'>" + timetables[v].fullName + "</a></li>");
+        }
     });
 }
 

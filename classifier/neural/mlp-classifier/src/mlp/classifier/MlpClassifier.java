@@ -104,8 +104,17 @@ class GetTimetablesRequestHandler extends ClassifierRequestHandler {
                 Double.parseDouble((String)params.get("locY"))
             };
             
-            int output = MlpClassifier.classifier.ask(input);
-            out.write(("([" + output + "]);").getBytes());
+            System.out.println("aaaa");
+            
+            int[] output = MlpClassifier.classifier.askForMultiple(input);
+            System.out.println("bbbb");
+            out.write(("([").getBytes());
+            System.out.println("cccc");
+            for(int numOut : output) {
+                out.write(("" + numOut + ",").getBytes());
+                System.out.println(numOut);
+            }
+            out.write(("]);").getBytes());
                     
         } catch (IOException ex) {
             Logger.getLogger(ClassifierRequestHandler.class.getName()).log(Level.SEVERE, null, ex);

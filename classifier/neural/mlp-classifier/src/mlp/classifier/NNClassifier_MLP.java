@@ -5,6 +5,7 @@
 package mlp.classifier;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -78,9 +79,13 @@ public class NNClassifier_MLP implements Classifier {
     @Override
     public int[] askForMultiple(double[] inputs) {
         
+        System.out.println("BEG");
+        
         nnet.setInput(inputs);
         nnet.calculate();
         double[] results = nnet.getOutput();
+        
+        System.out.println("CALCD");
         
         class SortHelper {
             double val;
@@ -105,11 +110,24 @@ public class NNClassifier_MLP implements Classifier {
             }
         }
         
-        //FIXME FIXME FIXME
+        System.out.println("POST-DEC");
+        
+        SortHelper[] helper = new SortHelper[results.length];
+        for(int i = 0 ; i < results.length ; ++i) {
+            helper[i] = new SortHelper(results[i], i);
+        }
+        
+        System.out.println("PRE-SORT");
 
-        return null;
+        Arrays.sort(helper, new SortHelperComparator());
         
+        System.out.println("POST-SORT");
         
+        int[] retVal = {helper[0].idx, helper[1].idx, helper[2].idx};
+        
+        System.out.println("END");
+        
+        return retVal;
     }
     
     @Override
