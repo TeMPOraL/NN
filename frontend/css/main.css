@@ -1,3 +1,36 @@
 h1 {
     font-size: 16pt;
+    text-align: center;
+}
+
+h2 {
+    font-size: 14pt;
+}
+
+#spatiotemporal-controls {
+    margin: 0px auto;
+    width: 50%;
+    text-align: center;
+}
+
+#recommendations-container {
+    margin: 0px auto;
+    width: 50%;
+    text-align: center;
+}
+
+#timetable iframe {
+    width: 500px;
+    height: 1000px;
+    border: none;
+}
+
+div#links-to-available-timetables {
+    width: 490px;
+    marin: 0 auto;
+    float: left;
+}
+
+li {
+    list-style: none;
 }

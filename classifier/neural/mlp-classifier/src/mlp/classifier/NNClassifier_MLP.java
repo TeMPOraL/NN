@@ -40,11 +40,8 @@ public class NNClassifier_MLP implements Classifier {
 
     @Override
     public void learn(double[] inputs, int output) {
-        System.out.println("PRE-TRAIN");
         requestsSoFar.add(new Request(inputs, output));
-        System.out.println("REQ");
         retrain();
-        System.out.println("POST-TRAIN");
     }
 
     @Override
@@ -81,14 +78,9 @@ public class NNClassifier_MLP implements Classifier {
 
     @Override
     public int[] askForMultiple(double[] inputs) {
-        
-        System.out.println("BEG");
-        
         nnet.setInput(inputs);
         nnet.calculate();
         double[] results = nnet.getOutput();
-        
-        System.out.println("CALCD");
         
         class SortHelper {
             double val;
